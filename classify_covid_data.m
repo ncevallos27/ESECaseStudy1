@@ -12,7 +12,6 @@ load("COVIDbyCounty.mat");
 states = {};
 for c = 1:height(CNTY_CENSUS)
     state = CNTY_CENSUS{c, "STNAME"};
-    CNTY_CENSUS(c, "Idx") = c;
     if ismember(state, states) ~= 1
         states(length(states)+1)= state;
     end
