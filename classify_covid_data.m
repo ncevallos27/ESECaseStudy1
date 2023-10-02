@@ -1,28 +1,20 @@
-load("COVIDbyCounty.mat");
+% classify data here, make sure that is the same distance formula as the
+% cluster.m file
+[~, test_idx] = pdist2(centroids, CNTY_COVID(testing_idx, :),'cosine','Smallest', 1);
 
-% take each state entries and split into two random groups one with 3/4 of
-% data and the other with 1/4 of the data, the smaller will be the test
-% group
-% if there is only one entry in state then put into group that is
-% mismatched, if there is no group that is mismatched then randomly assign
-% it into testing or training set. If number of state entries is odd then
-% add the smaller or bigger one to the mismatched group so the make them
-% equal after adding
+testing_covid = CNTY_COVID(testing_idx, :);
 
-states = {};
-for c = 1:height(CNTY_CENSUS)
-    state = CNTY_CENSUS{c, "STNAME"};
-    if ismember(state, states) ~= 1
-        states(length(states)+1)= state;
-    end
+found_divisions = [];
+correct = [];
+
+for c = 1:length(test_idx)
+    found_divisions(c) = definitions(test_idx(c));
+    correct(c) = (found_divisions(c) == testing{c, "DIVISION"});
 end
 
-training = table;
-testing = table;
+num_correct = sum(correct);
 
-for c = 1:length(states)
-
-end
+J = num_correct - (0.5*length(definitions));
 
 
-
+%run optetimation and see what is the best for performance and competion
