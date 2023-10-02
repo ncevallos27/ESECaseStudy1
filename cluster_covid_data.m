@@ -19,11 +19,12 @@ end
 for c = 1:length(states)
     idx = find(CNTY_CENSUS{:, "STNAME"} == string(states(c)));
     breakPoint = int16(length(idx)*0.75);
+    idx_rand = idx(randperm(length(idx)));
     for d = 1:breakPoint
-        training = [training;CNTY_CENSUS(idx(d), :)];
+        training = [training;CNTY_CENSUS(idx_rand(d), :)];
     end
     for d = breakPoint+1:length(idx)
-        testing = [testing;CNTY_CENSUS(idx(d), :)];
+        testing = [testing;CNTY_CENSUS(idx_rand(d), :)];
     end
 end
 
