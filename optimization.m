@@ -88,7 +88,7 @@ for g = 1:number_g
     J_maxes = [J_maxes;[M I]];
 
 end
-
+% creating a plot
 figure
 
 for g = 1:number_g
