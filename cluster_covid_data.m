@@ -1,7 +1,4 @@
-% TODO OPTIMIZE SCRIPT
-
 load("COVIDbyCounty.mat");
-rng(1);
 
 CNTY_CENSUS.idx = [1:height(CNTY_CENSUS)]'; 
 
@@ -31,7 +28,7 @@ end
 training_idx = training{:, "idx"};
 testing_idx = testing{:, "idx"};
 
-[idx, centroids] = kmeans(CNTY_COVID(training_idx, :), 9, 'Distance', "cosine");
+[idx, centroids] = kmeans(CNTY_COVID(training_idx, :), 40, 'Distance', "cosine");
 
 definitions = [];
 

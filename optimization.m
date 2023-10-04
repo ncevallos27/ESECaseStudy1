@@ -17,8 +17,8 @@ J_all = [];
 correct_maxes = [];
 J_maxes = [];
 
-distance_value = "euclidean";
-number_g = 10;
+distance_value = "cityblock";
+number_g = 11;
 
 for g = 1:number_g
     training = table;
@@ -47,10 +47,11 @@ for g = 1:number_g
     
     for num_clusters = 1:100
     
-        [idx, centroids] = kmeans(CNTY_COVID(training_idx, :), num_clusters);
+        [idx, centroids] = kmeans(CNTY_COVID(training_idx, :), num_clusters, "distance", distance_value);
         
         definitions = [];
         
+        % Strategy 1
         for c = 1:height(centroids)
             divisionCounts_curr = [];
             table_current = training(idx == c, :);
@@ -60,9 +61,8 @@ for g = 1:number_g
             [~,I] = max(divisionCounts_curr);
             definitions(c) = I;
         end
-        
-        
-        [~, test_idx] = pdist2(centroids, CNTY_COVID(testing_idx, :), distance_value,'Smallest', 1);
+
+        [~, test_idx] = pdist2(centroids, CNTY_COVID(testing_idx, :), distance_value, 'Smallest', 1);
         
         testing_covid = CNTY_COVID(testing_idx, :);
         
